@@ -22,6 +22,9 @@ const ProductSchema = mongoose.Schema(
   },
   {
     timestamps: true,
+  },
+  {
+    shop: { type: mongoose.Schema.Types.ObjectId, ref: "shop" },
   }
 );
 

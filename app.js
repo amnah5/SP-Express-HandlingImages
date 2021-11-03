@@ -7,8 +7,9 @@ const logger = require("./middleware/logger");
 const cors = require("cors");
 const errorHandler = require("./middleware/errorHandler");
 const path = require("path");
-const categoriesRoutes = require("./apis/products/routes");
+const shopsRoutes = require("./apis/products/routes");
 const app = express();
+const userRoutes = require("./apis/users/users.routes");
 
 connectDB();
 
@@ -22,9 +23,10 @@ app.use((req, res, next) => {
     res.status(400).json({ message: "I HATE BROCCOLI!! KEEFY! " });
   else next();
 });
-app.use("/api/categories", categoriesRoutes);
+app.use("/api/shops", shopsRoutes);
 // Routes
 app.use("/api/products", productRoutes);
+app.use("/api", userRoutes);
 app.use("/media", express.static(path.join(__dirname, "media")));
 
 app.use((req, res, next) => {
