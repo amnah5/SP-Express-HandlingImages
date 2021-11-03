@@ -7,7 +7,7 @@ const logger = require("./middleware/logger");
 const cors = require("cors");
 const errorHandler = require("./middleware/errorHandler");
 const path = require("path");
-const shopsRoutes = require("./apis/products/routes");
+const shopsRoutes = require("./apis/shops/shops.routes");
 const app = express();
 const userRoutes = require("./apis/users/users.routes");
 
@@ -35,5 +35,5 @@ app.use((req, res, next) => {
 
 app.use(errorHandler);
 
-const PORT = 8005;
+const PORT = 8000;
 app.listen(PORT, () => console.log(`Application running on localhost:${PORT}`));

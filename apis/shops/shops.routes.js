@@ -1,8 +1,8 @@
 const express = require("express");
-const shop = require("../../db/models/shop");
+const Shop = require("../../db/models/Shop");
 const upload = require("../../middleware/multer");
 
-const { shopListFetch, shopCreate } = require("./controllers");
+const { shopListFetch, shopCreate, fetchshop } = require("./shops.controllers");
 
 // Create a mini express application
 const router = express.Router();
@@ -18,11 +18,11 @@ router.param("shopId", async (req, res, next, shopId) => {
   }
 });
 
-// router.post("/", upload.single("image"), shopCreate);
+router.post("/", upload.single("image"), shopCreate);
 // router.post("/:shopId/shops", shopCreate);
 
-router.get("/", getshops);
+// router.get("/", getshops);
 
-router.post("/", shopCreate);
+router.get("/", shopListFetch);
 
 module.exports = router;
