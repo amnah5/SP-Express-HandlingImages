@@ -1,7 +1,7 @@
 const express = require("express");
 const productRoutes = require("./apis/products/routes");
 // const connectDB = require("./db/database");
-const connectDB = require("./db/models/Product");
+const connectDB = require("./db/database");
 const morgan = require("morgan");
 const logger = require("./middleware/logger");
 const cors = require("cors");

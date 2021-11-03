@@ -12,7 +12,7 @@ exports.signup = async (req, res, next) => {
     const payload = {
       _id: newUser._id,
       username: newUser.username,
-      exp: DataTransfer.now() + JWT_EXPIRATION_MS,
+      exp: Date.now() + JWT_EXPIRATION_MS,
     };
     const token = jwt.sign(payload, JWT_SECRET);
     res.status(201).json({ token });

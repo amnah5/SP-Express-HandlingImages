@@ -10,3 +10,4 @@ router.post("/signup", signup);
 //   passport.authenticate("local", { session: false }),
 //   signin
 // );
+module.exports = router;
