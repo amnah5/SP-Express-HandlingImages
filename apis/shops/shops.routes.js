@@ -2,7 +2,12 @@ const express = require("express");
 const Shop = require("../../db/models/Shop");
 const upload = require("../../middleware/multer");
 
-const { shopListFetch, shopCreate, fetchshop } = require("./shops.controllers");
+const {
+  productCreate,
+  shopListFetch,
+  shopCreate,
+  fetchshop,
+} = require("./shops.controllers");
 
 // Create a mini express application
 const router = express.Router();
@@ -17,12 +22,11 @@ router.param("shopId", async (req, res, next, shopId) => {
     next({ status: 404, message: "shop Not Found!" });
   }
 });
+router.get("/", shopListFetch);
 
 router.post("/", upload.single("image"), shopCreate);
-// router.post("/:shopId/shops", shopCreate);
+router.post("/:shopId/product", upload.single("image"), productCreate);
 
 // router.get("/", getshops);
-
-router.get("/", shopListFetch);
 
 module.exports = router;

@@ -1,4 +1,5 @@
 const Shop = require("../../db/models/Shop");
+const Product = require("../../db/models/Product");
 
 exports.fetchShop = async (shopId, next) => {
   try {
@@ -11,7 +12,7 @@ exports.fetchShop = async (shopId, next) => {
 
 exports.shopListFetch = async (req, res, next) => {
   try {
-    const shops = await Shop.find();
+    const shops = await Shop.find().populate("products");
     return res.json(shops);
   } catch (error) {
     next(error);
@@ -28,5 +29,21 @@ exports.shopCreate = async (req, res) => {
     return res.status(201).json(newshop);
   } catch (error) {
     return res.status(500).json({ message: error.message });
+  }
+};
+
+exports.productCreate = async (req, res, next) => {
+  try {
+    if (req.file) {
+      req.body.image = `${req.protocol}://${req.get("host")}/${req.file.path}`;
+    }
+    req.body.shop = req.params.shopId;
+    const newProduct = await Product.create(req.body);
+    await Shop.findByIdAndUpdate(req.shop, {
+      $push: { products: newProduct._id },
+    });
+    return res.status(201).json(newProduct);
+  } catch (error) {
+    next(error);
   }
 };
