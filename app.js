@@ -10,7 +10,9 @@ const path = require("path");
 const shopsRoutes = require("./apis/shops/shops.routes");
 const app = express();
 const userRoutes = require("./apis/users/users.routes");
-
+const passport = require("passport");
+const { localStrategy } = require("./middleware/passport");
+const jwtStrategy = require("jwtStrategy");
 connectDB();
 
 // Middleware
@@ -23,6 +25,11 @@ app.use((req, res, next) => {
     res.status(400).json({ message: "I HATE BROCCOLI!! KEEFY! " });
   else next();
 });
+
+app.use(passport.initialize());
+passport.use(localStrategy);
+passport.use(jwtStrategy);
+
 app.use("/api/shops", shopsRoutes);
 // Routes
 app.use("/api/products", productRoutes);
